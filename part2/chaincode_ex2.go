@@ -26,6 +26,7 @@ import (
 	"encoding/json"
 	"time"
 	"strings"
+        "math/rand"
 
 	"github.com/openblockchain/obc-peer/openchain/chaincode/shim"
 )
@@ -36,6 +37,7 @@ type SimpleChaincode struct {
 
 var marbleIndexStr = "_marbleindex"				//name for the key/value that will store a list of all known marbles
 var openTradesStr = "_opentrades"				//name for the key/value that will store all open trades
+var randomStr ="_random"
 
 type Marble struct{
 	Name string `json:"name"`					//the fieldtags are needed to keep case from bouncing around
@@ -58,6 +60,10 @@ type AnOpenTrade struct{
 
 type AllTrades struct{
 	OpenTrades []AnOpenTrade `json:"open_trades"`
+}
+
+type TheRand struct {
+         Value int `jason:value`
 }
 
 // ============================================================================================================================
@@ -130,7 +136,9 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 		return res, err
 	} else if function == "remove_trade" {									//cancel an open trade order
 		return t.remove_trade(stub, args)
-	}
+	} else if function == "random_state" {                                                                  //store random state
+                return t.random_state(stub, args)
+        }
 	fmt.Println("run did not find func: " + function)						//error
 
 	return nil, errors.New("Received unknown function invocation")
@@ -296,6 +304,7 @@ func (t *SimpleChaincode) set_user(stub *shim.ChaincodeStub, args []string) ([]b
 	if len(args) < 2 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 2")
 	}
+
 	
 	fmt.Println("- start set user")
 	fmt.Println(args[0] + " - " + args[1])
@@ -315,6 +324,28 @@ func (t *SimpleChaincode) set_user(stub *shim.ChaincodeStub, args []string) ([]b
 	
 	fmt.Println("- end set user")
 	return nil, nil
+}
+// ============================================================================================================================
+// Random State - Store state withe a random value. I wand to tests what happens when chain code does different things.
+// Will then create a function that reads this back.
+// ============================================================================================================================
+func (t *SimpleChaincode) random_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+        var err error
+        var i int
+        var v  TheRand
+        v.Value = rand.int()
+        jsonAsBytes, _ := json.Marshal(v)
+        err = stub.PutState( randomStr, jsonAsBytes)                                                               //rewrite the marble with id as key
+        if err != nil {
+                return nil, err
+        }
+
+        fmt.Println("- end set user")
+        fmt.Println( jasonAsBytes)
+        fmt.Println(v.Value)
+        return nil, nil
+ 
+
 }
 
 // ============================================================================================================================
