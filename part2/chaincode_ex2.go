@@ -331,16 +331,15 @@ func (t *SimpleChaincode) set_user(stub *shim.ChaincodeStub, args []string) ([]b
 // ============================================================================================================================
 func (t *SimpleChaincode) random_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
         var err error
-        var i int
         var v  TheRand
-        v.Value = rand.int()
+        v.Value = rand.Int()
         jsonAsBytes, _ := json.Marshal(v)
         err = stub.PutState( randomStr, jsonAsBytes)                                                               //rewrite the marble with id as key
         if err != nil {
                 return nil, err
         }
 
-        fmt.Println("- end set user")
+        fmt.Println("- end Rand")
         fmt.Println( jasonAsBytes)
         fmt.Println(v.Value)
         return nil, nil
