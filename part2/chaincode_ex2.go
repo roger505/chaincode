@@ -323,11 +323,11 @@ func (t *SimpleChaincode) set_user(stub *shim.ChaincodeStub, args []string) ([]b
 // Random State - Store state withe a random value. I wand to tests what happens when chain code does different things.
 // Will then create a function that reads this back.
 // ============================================================================================================================
-//func (t *SimpleChaincode) random_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
-//        var err error
-//        fmt.Println("- end Rand")
-//        return nil, nil
-//}
+func (t *SimpleChaincode) random_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+        var err error
+        fmt.Println("- end Rand")
+        return nil, nil
+}
 
 // ============================================================================================================================
 // Open Trade - create an open trade for a marble you want with marbles you have 
