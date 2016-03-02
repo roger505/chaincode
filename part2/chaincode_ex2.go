@@ -26,7 +26,7 @@ import (
 	"encoding/json"
 	"time"
 	"strings"
-        "math/rand"
+//        "math/rand"
 
 	"github.com/openblockchain/obc-peer/openchain/chaincode/shim"
 )
@@ -331,17 +331,17 @@ func (t *SimpleChaincode) set_user(stub *shim.ChaincodeStub, args []string) ([]b
 // ============================================================================================================================
 func (t *SimpleChaincode) random_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
         var err error
-        var v  TheRand
-        v.Value = rand.Int()
-        jsonAsBytes, _ := json.Marshal(v)
-        err = stub.PutState( randomStr, jsonAsBytes)                                                               //rewrite the marble with id as key
-        if err != nil {
-                return nil, err
-        }
+   //     var v  TheRand
+    //    v.Value = rand.Int()
+   //     jsonAsBytes, _ := json.Marshal(v)
+   //     err = stub.PutState( randomStr, jsonAsBytes)                                                               //rewrite the marble with id as key
+   //     if err != nil {
+   //             return nil, err
+   //     }
 
         fmt.Println("- end Rand")
-        fmt.Println( jasonAsBytes)
-        fmt.Println(v.Value)
+   //     fmt.Println( jasonAsBytes)
+   //      fmt.Println(v.Value)
         return nil, nil
  
 
