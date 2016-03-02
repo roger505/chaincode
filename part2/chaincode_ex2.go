@@ -129,9 +129,10 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 		return res, err
 	} else if function == "remove_trade" {									//cancel an open trade order
 		return t.remove_trade(stub, args)
-	} else if function == "random_state" {                                                                  //store random state
-                return t.random_state(stub, args)
-        }
+	} 
+//else if function == "random_state" {                                                                  //store random state
+//                return t.random_state(stub, args)
+//        }
 	fmt.Println("run did not find func: " + function)						//error
 
 	return nil, errors.New("Received unknown function invocation")
@@ -322,11 +323,11 @@ func (t *SimpleChaincode) set_user(stub *shim.ChaincodeStub, args []string) ([]b
 // Random State - Store state withe a random value. I wand to tests what happens when chain code does different things.
 // Will then create a function that reads this back.
 // ============================================================================================================================
-func (t *SimpleChaincode) random_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
-        var err error
-        fmt.Println("- end Rand")
-        return nil, nil
-}
+//func (t *SimpleChaincode) random_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+//        var err error
+//        fmt.Println("- end Rand")
+//        return nil, nil
+//}
 
 // ============================================================================================================================
 // Open Trade - create an open trade for a marble you want with marbles you have 
