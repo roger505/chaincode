@@ -26,8 +26,6 @@ import (
 	"encoding/json"
 	"time"
 	"strings"
-//        "math/rand"
-
 	"github.com/openblockchain/obc-peer/openchain/chaincode/shim"
 )
 
@@ -37,7 +35,6 @@ type SimpleChaincode struct {
 
 var marbleIndexStr = "_marbleindex"				//name for the key/value that will store a list of all known marbles
 var openTradesStr = "_opentrades"				//name for the key/value that will store all open trades
-var randomStr ="_random"
 
 type Marble struct{
 	Name string `json:"name"`					//the fieldtags are needed to keep case from bouncing around
@@ -60,10 +57,6 @@ type AnOpenTrade struct{
 
 type AllTrades struct{
 	OpenTrades []AnOpenTrade `json:"open_trades"`
-}
-
-type TheRand struct {
-         Value int `jason:value`
 }
 
 // ============================================================================================================================
@@ -331,20 +324,8 @@ func (t *SimpleChaincode) set_user(stub *shim.ChaincodeStub, args []string) ([]b
 // ============================================================================================================================
 func (t *SimpleChaincode) random_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
         var err error
-   //     var v  TheRand
-    //    v.Value = rand.Int()
-   //     jsonAsBytes, _ := json.Marshal(v)
-   //     err = stub.PutState( randomStr, jsonAsBytes)                                                               //rewrite the marble with id as key
-   //     if err != nil {
-   //             return nil, err
-   //     }
-
         fmt.Println("- end Rand")
-   //     fmt.Println( jasonAsBytes)
-   //      fmt.Println(v.Value)
         return nil, nil
- 
-
 }
 
 // ============================================================================================================================
