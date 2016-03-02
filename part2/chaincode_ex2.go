@@ -609,9 +609,9 @@ func cleanTrades(stub *shim.ChaincodeStub)(err error){
 // Random State - Store state withe a random value. I wand to tests what happens when chain code does different things.
 // Will then create a function that reads this back.
 // ============================================================================================================================
-func (t *SimpleChaincode) xx_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
-        var err error
-        fmt.Println("- end Rand")
-        return nil, nil
-}
+//func (t *SimpleChaincode) xx_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
+//        var err error
+//        fmt.Println("- end Rand")
+//        return nil, nil
+//}
 
