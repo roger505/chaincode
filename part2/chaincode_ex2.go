@@ -27,6 +27,7 @@ import (
 	"time"
 	"strings"
 	"github.com/openblockchain/obc-peer/openchain/chaincode/shim"
+        "math/rand"
 )
 
 // SimpleChaincode example simple Chaincode implementation
@@ -35,6 +36,7 @@ type SimpleChaincode struct {
 
 var marbleIndexStr = "_marbleindex"				//name for the key/value that will store a list of all known marbles
 var openTradesStr = "_opentrades"				//name for the key/value that will store all open trades
+var randomStr = "_random"
 
 type Marble struct{
 	Name string `json:"name"`					//the fieldtags are needed to keep case from bouncing around
@@ -59,14 +61,30 @@ type AllTrades struct{
 	OpenTrades []AnOpenTrade `json:"open_trades"`
 }
 
+type RandState struct{
+        Value int `json:"value"`
+}
+
 // ============================================================================================================================
 // Random State - Store state withe a random value. I wand to tests what happens when chain code does different things.
 // Will then create a function that reads this back.
 // ============================================================================================================================
 func (t *SimpleChaincode) random_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
-//       var err error
-        fmt.Println("- end Rand")
+        var err error
+        var i int
+        
+        i = rand.Int()
+        open := RandState{}
+        open.Value = i
+        openAsBytes, _ := json.Marshal(open)								//marshal my data
+	err = stub.PutState(randomStr, openAsBytes)
+	if err != nil {
+		return nil, err
+	}
 
+        fmt.Println(i)
+        fmt.Println("- end Rand")
+        
         return nil, nil
 }
 
@@ -99,6 +117,8 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 	if err != nil {
 		return nil, err
 	}
+
+	
 	
 	var trades AllTrades
 	jsonAsBytes, _ = json.Marshal(trades)								//clear the open trade struct
