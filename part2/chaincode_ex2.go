@@ -128,8 +128,11 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 	}
 
         var i int
-        
-        i = rand.Int()
+        // Typically a non-fixed seed should be used, such as time.Now().UnixNano().
+	// Using a fixed seed will produce the same output on every run.
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+
+        i = r.Int()
         open := RandState{}
         open.Value = i
         openAsBytes, _ := json.Marshal(open)								//marshal my data
