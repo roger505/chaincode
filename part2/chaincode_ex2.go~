@@ -126,20 +126,7 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 	if err != nil {
 		return nil, err
 	}
-
-        var i int
-        
-        i = rand.Int()
-        open := RandState{}
-        open.Value = i
-        openAsBytes, _ := json.Marshal(open)								//marshal my data
-	err = stub.PutState(randomStr, openAsBytes)
-	if err != nil {
-		return nil, err
-	}
-
-        fmt.Println(i)
-        fmt.Println("- end Rand")
+	
 	return nil, nil
 }
 
@@ -327,19 +314,6 @@ func (t *SimpleChaincode) init_marble(stub *shim.ChaincodeStub, args []string) (
 	err = stub.PutState(marbleIndexStr, jsonAsBytes)						//store name of marble
 
 	fmt.Println("- end init marble")
-
-
-
-        randAsBytes, err := stub.GetState(randomStr)
-	if err != nil {
-		return nil, err
-	}
-        randOne := RandState{}
-	json.Unmarshal(randAsBytes, &randOne)	
-
-        fmt.Println(randOne.Value)
-                
-        fmt.Println("- End Init") 
 	return nil, nil
 }
 
