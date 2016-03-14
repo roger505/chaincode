@@ -127,21 +127,21 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 		return nil, err
 	}
 
-        var i int
+ //       var i int
         // Typically a non-fixed seed should be used, such as time.Now().UnixNano().
 	// Using a fixed seed will produce the same output on every run.
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	//r := rand.New(rand.NewSource(time.Now().UnixNano()))
 
-        i = r.Int()
-        open := RandState{}
-        open.Value = i
-        openAsBytes, _ := json.Marshal(open)								//marshal my data
-	err = stub.PutState(randomStr, openAsBytes)
-	if err != nil {
-		return nil, err
-	}
+   //     i = r.Int()
+    //    open := RandState{}
+   //     open.Value = i
+   //     openAsBytes, _ := json.Marshal(open)								//marshal my data
+   //	err = stub.PutState(randomStr, openAsBytes)
+//	if err != nil {
+//		return nil, err
+//	}
 
-        fmt.Println(i)
+//        fmt.Println(i)
         fmt.Println("- end Rand")
 	return nil, nil
 }
