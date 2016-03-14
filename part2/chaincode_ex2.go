@@ -333,14 +333,14 @@ func (t *SimpleChaincode) init_marble(stub *shim.ChaincodeStub, args []string) (
 
 
 
-        randAsBytes, err := stub.GetState(randomStr)
-	if err != nil {
-		return nil, err
-	}
-        randOne := RandState{}
-	json.Unmarshal(randAsBytes, &randOne)	
+        //randAsBytes, err := stub.GetState(randomStr)
+	//if err != nil {
+	//	return nil, err
+	//}
+        //randOne := RandState{}
+	//json.Unmarshal(randAsBytes, &randOne)	
 
-        fmt.Println(randOne.Value)
+        // fmt.Println(randOne.Value)
                 
         fmt.Println("- End Init") 
 	return nil, nil
