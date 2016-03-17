@@ -96,6 +96,7 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println("End Init")
 	
 	return nil, nil
 }
@@ -106,7 +107,7 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 	fmt.Println("run is running " + function)
 
-        fmt.Println("MODIFIED code running")
+        fmt.Println("MODIFIED-back code running")
 	// Handle different functions
 	if function == "init" {													//initialize the chaincode state, used as reset
 		return t.init(stub, args)
