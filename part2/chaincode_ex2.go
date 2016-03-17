@@ -96,7 +96,27 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 	if err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	
+=======
+
+ //       var i int
+        // Typically a non-fixed seed should be used, such as time.Now().UnixNano().
+	// Using a fixed seed will produce the same output on every run.
+	//r := rand.New(rand.NewSource(time.Now().UnixNano()))
+
+   //     i = r.Int()
+    //    open := RandState{}
+   //     open.Value = i
+   //     openAsBytes, _ := json.Marshal(open)								//marshal my data
+   //	err = stub.PutState(randomStr, openAsBytes)
+//	if err != nil {
+//		return nil, err
+//	}
+
+//        fmt.Println(i)
+        fmt.Println("- end Rand")
+>>>>>>> 6a325f4145d626477cbb3d363aad755612e07c0f
 	return nil, nil
 }
 
@@ -281,6 +301,22 @@ func (t *SimpleChaincode) init_marble(stub *shim.ChaincodeStub, args []string) (
 	err = stub.PutState(marbleIndexStr, jsonAsBytes)						//store name of marble
 
 	fmt.Println("- end init marble")
+<<<<<<< HEAD
+=======
+
+
+
+        //randAsBytes, err := stub.GetState(randomStr)
+	//if err != nil {
+	//	return nil, err
+	//}
+        //randOne := RandState{}
+	//json.Unmarshal(randAsBytes, &randOne)	
+
+        // fmt.Println(randOne.Value)
+                
+        fmt.Println("- End Init") 
+>>>>>>> 6a325f4145d626477cbb3d363aad755612e07c0f
 	return nil, nil
 }
 
