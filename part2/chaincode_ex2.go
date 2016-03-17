@@ -26,8 +26,8 @@ import (
 	"encoding/json"
 	"time"
 	"strings"
+
 	"github.com/openblockchain/obc-peer/openchain/chaincode/shim"
-        "math/rand"
 )
 
 // SimpleChaincode example simple Chaincode implementation
@@ -36,7 +36,6 @@ type SimpleChaincode struct {
 
 var marbleIndexStr = "_marbleindex"				//name for the key/value that will store a list of all known marbles
 var openTradesStr = "_opentrades"				//name for the key/value that will store all open trades
-var randomStr = "_random"
 
 type Marble struct{
 	Name string `json:"name"`					//the fieldtags are needed to keep case from bouncing around
@@ -59,33 +58,6 @@ type AnOpenTrade struct{
 
 type AllTrades struct{
 	OpenTrades []AnOpenTrade `json:"open_trades"`
-}
-
-type RandState struct{
-        Value int `json:"value"`
-}
-
-// ============================================================================================================================
-// Random State - Store state withe a random value. I wand to tests what happens when chain code does different things.
-// Will then create a function that reads this back.
-// ============================================================================================================================
-func (t *SimpleChaincode) random_state(stub *shim.ChaincodeStub, args []string) ([]byte, error) {
-        var err error
-        var i int
-        
-        i = rand.Int()
-        open := RandState{}
-        open.Value = i
-        openAsBytes, _ := json.Marshal(open)								//marshal my data
-	err = stub.PutState(randomStr, openAsBytes)
-	if err != nil {
-		return nil, err
-	}
-
-        fmt.Println(i)
-        fmt.Println("- end Rand")
-        
-        return nil, nil
 }
 
 // ============================================================================================================================
@@ -117,8 +89,6 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 	if err != nil {
 		return nil, err
 	}
-
-	
 	
 	var trades AllTrades
 	jsonAsBytes, _ = json.Marshal(trades)								//clear the open trade struct
@@ -126,23 +96,7 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 	if err != nil {
 		return nil, err
 	}
-
- //       var i int
-        // Typically a non-fixed seed should be used, such as time.Now().UnixNano().
-	// Using a fixed seed will produce the same output on every run.
-	//r := rand.New(rand.NewSource(time.Now().UnixNano()))
-
-   //     i = r.Int()
-    //    open := RandState{}
-   //     open.Value = i
-   //     openAsBytes, _ := json.Marshal(open)								//marshal my data
-   //	err = stub.PutState(randomStr, openAsBytes)
-//	if err != nil {
-//		return nil, err 
-//	}
-
-//        fmt.Println(i)
-        fmt.Println("- End Removed Data")
+	
 	return nil, nil
 }
 
@@ -152,7 +106,6 @@ func (t *SimpleChaincode) init(stub *shim.ChaincodeStub, args []string) ([]byte,
 func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 	fmt.Println("run is running " + function)
 
-        fmt.Println("MODIFIED code running")
 	// Handle different functions
 	if function == "init" {													//initialize the chaincode state, used as reset
 		return t.init(stub, args)
@@ -176,9 +129,7 @@ func (t *SimpleChaincode) Run(stub *shim.ChaincodeStub, function string, args []
 		return res, err
 	} else if function == "remove_trade" {									//cancel an open trade order
 		return t.remove_trade(stub, args)
-	} else if function == "random_state" {                                                                  //store random state
-                return t.random_state(stub, args)
-        }
+	}
 	fmt.Println("run did not find func: " + function)						//error
 
 	return nil, errors.New("Received unknown function invocation")
@@ -330,19 +281,6 @@ func (t *SimpleChaincode) init_marble(stub *shim.ChaincodeStub, args []string) (
 	err = stub.PutState(marbleIndexStr, jsonAsBytes)						//store name of marble
 
 	fmt.Println("- end init marble")
-
-
-
-        //randAsBytes, err := stub.GetState(randomStr)
-	//if err != nil {
-	//	return nil, err
-	//}
-        //randOne := RandState{}
-	//json.Unmarshal(randAsBytes, &randOne)	
-
-        // fmt.Println(randOne.Value)
-                
-        fmt.Println("- End Init after") 
 	return nil, nil
 }
 
@@ -357,7 +295,6 @@ func (t *SimpleChaincode) set_user(stub *shim.ChaincodeStub, args []string) ([]b
 	if len(args) < 2 {
 		return nil, errors.New("Incorrect number of arguments. Expecting 2")
 	}
-
 	
 	fmt.Println("- start set user")
 	fmt.Println(args[0] + " - " + args[1])
@@ -662,6 +599,3 @@ func cleanTrades(stub *shim.ChaincodeStub)(err error){
 	fmt.Println("- end clean trades")
 	return nil
 }
-
-
-
